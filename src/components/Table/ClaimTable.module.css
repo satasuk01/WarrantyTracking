@@ -1,0 +1,11 @@
+.Table {
+    width: 95%;
+    margin: 0px auto;
+}
+.Table thead{
+    background-color: lightgray;
+}
+
+.marginTop{
+    margin-top: 10px;
+}

@@ -1,0 +1,24 @@
+.Forms {
+    width: 80%;
+    margin: 10px auto;
+    padding: 10px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+}
+
+.Inline {
+    text-align: center;
+}
+
+.PageHeaderForm {
+    text-align: center;
+}
+
+.Help{
+    text-align: right;
+    font-size: 1.2rem;
+    color:#d60000;
+}
+.MarginBottom0{
+    margin-bottom: 0;
+}

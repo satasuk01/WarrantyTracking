@@ -11,9 +11,11 @@ import ClaimRadio from '../../components/RadioButton/ClaimableRadio';
 import ClaimTableInput from '../../components/Table/ClaimTableInput/ClaimTableInput';
 import IncentiveTable from '../../components/Table/IncentiveTable/IncentiveTable';
 import IncentiveInput from '../../components/Table/IncentiveTable/IncentiveTableInput/IncentiveTableInput';
+import Modal from '../../components/UI/Modal/Modal';
 
 class Forms extends Component {
     state = {
+        confirming: false,
         //----------Implemented
         showroomID: '',
         showroomName: '',
@@ -46,6 +48,12 @@ class Forms extends Component {
         //===============
 
     };
+    confirmCancelHandler = () => {
+        this.setState({ confirming: false });
+    }
+    confirmHandler = () => {
+        this.setState({ confirming: true });
+    }
 
     getValidationState(value) {
         const length = value.length;
@@ -94,7 +102,7 @@ class Forms extends Component {
         }
     }
     handleClickIncentive(cardTypeName, amountVal, priceVal) {
-        if (isNaN(amountVal) || isNaN(priceVal) || cardTypeName.length === 0 ) {
+        if (isNaN(amountVal) || isNaN(priceVal) || cardTypeName.length === 0) {
             alert("กรุณากรอกเฉพาะตัวเลข และเช็คข้อมูลให้ถูกต้อง")
         } else {
             const oldState = { ...this.state }
@@ -138,6 +146,9 @@ class Forms extends Component {
     render() {
         return (
             <React.Fragment>
+                <Modal show={this.state.confirming} modalClosed={this.confirmCancelHandler}>
+                    Show
+                </Modal>
                 <PageHeader className={classes.PageHeaderForm}>Warranty Tracking</PageHeader>
                 <div className={classes.Forms}>
                     <Form inline>
@@ -236,13 +247,13 @@ class Forms extends Component {
                     </Form>
                     <hr />
                     <Form inline>
-                        <MonthYearDropDown 
-                        fromMonthChanged={(event) => this.handleChange(event, 'fromMonth')} 
-                        toMonthChanged={(event) => this.handleChange(event, 'toMonth')}
-                        yearChanged={(event) =>  this.handleChange(event, 'year')}
-                        fromMonth = {this.state.fromMonth}
-                        toMonth = {this.state.toMonth}
-                        year = {this.state.year}
+                        <MonthYearDropDown
+                            fromMonthChanged={(event) => this.handleChange(event, 'fromMonth')}
+                            toMonthChanged={(event) => this.handleChange(event, 'toMonth')}
+                            yearChanged={(event) => this.handleChange(event, 'year')}
+                            fromMonth={this.state.fromMonth}
+                            toMonth={this.state.toMonth}
+                            year={this.state.year}
                         />
                     </Form>
                     <Row><Col><IncentiveTable rows={this.state.incentiveTable} events={this.deleteIncentiveHandler} /></Col></Row>
@@ -279,7 +290,7 @@ class Forms extends Component {
                     </Form>
                     <hr />
                     <div align="right" style={{ padding: '0 5%' }}>
-                        <Button>ส่ง</Button>
+                        <Button onClick={this.confirmHandler}>ส่ง</Button>
                     </div>
                 </div>
             </React.Fragment >

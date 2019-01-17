@@ -31,7 +31,7 @@ class Forms extends Component {
         //-----------Not yet
         fromMonth: '',
         toMonth: '',
-        year: '',
+        year: '2019',
         //-----Claim Table
         tempClaimFrom: '',
         tempAmount: '',
@@ -94,7 +94,7 @@ class Forms extends Component {
         }
     }
     handleClickIncentive(cardTypeName, amountVal, priceVal) {
-        if (isNaN(amountVal) || isNaN(priceVal) || cardTypeName.length === 0) {
+        if (isNaN(amountVal) || isNaN(priceVal) || cardTypeName.length === 0 ) {
             alert("กรุณากรอกเฉพาะตัวเลข และเช็คข้อมูลให้ถูกต้อง")
         } else {
             const oldState = { ...this.state }
@@ -104,11 +104,36 @@ class Forms extends Component {
         }
     }
 
+    deleteIncentiveHandler = {
+        onClick: (e, row, rowIndex) => {
+            //console.log(row);
+            //console.log(`clicked on row with index: ${rowIndex}`);
+            const oldState = { ...this.state };
+            const newArray = [...this.state.incentiveTable];
+            newArray.splice(rowIndex, 1);
+            oldState.incentiveTable = newArray;
+            this.setState(oldState);
+        },
+    }
+
+    deleteClaimHandler = {
+        onClick: (e, row, rowIndex) => {
+            //console.log(row);
+            //console.log(`clicked on row with index: ${rowIndex}`);
+            const oldState = { ...this.state };
+            const newArray = [...this.state.claimTable];
+            newArray.splice(rowIndex, 1);
+            oldState.claimTable = newArray;
+            this.setState(oldState);
+        },
+    }
+
     handleDateChange(date, state) {
         const oldState = { ...this.state }
         oldState[state] = date;
         this.setState(oldState);
     }
+
 
     render() {
         return (
@@ -211,9 +236,16 @@ class Forms extends Component {
                     </Form>
                     <hr />
                     <Form inline>
-                        <MonthYearDropDown />
+                        <MonthYearDropDown 
+                        fromMonthChanged={(event) => this.handleChange(event, 'fromMonth')} 
+                        toMonthChanged={(event) => this.handleChange(event, 'toMonth')}
+                        yearChanged={(event) =>  this.handleChange(event, 'year')}
+                        fromMonth = {this.state.fromMonth}
+                        toMonth = {this.state.toMonth}
+                        year = {this.state.year}
+                        />
                     </Form>
-                    <Row><Col><IncentiveTable rows={this.state.incentiveTable} /></Col></Row>
+                    <Row><Col><IncentiveTable rows={this.state.incentiveTable} events={this.deleteIncentiveHandler} /></Col></Row>
                     <IncentiveInput
                         cardType={this.state.tempCardType}
                         claimAmount={this.state.tempCardAmount}
@@ -225,7 +257,7 @@ class Forms extends Component {
                     />
                     <hr />
                     <Row><ClaimRadio value={this.state.claimable} changed={(event) => this.handleChange(event, "claimable")} /></Row>
-                    <Row><Col><ClaimTable rows={this.state.claimTable} /></Col></Row>
+                    <Row><Col><ClaimTable rows={this.state.claimTable} events={this.deleteClaimHandler} /></Col></Row>
                     <ClaimTableInput
                         claimFrom={this.state.tempClaimFrom}
                         claimAmount={this.state.tempAmout}

@@ -17,13 +17,12 @@ const incentiveTable = (props) => {
     }, {
         dataField: 'total',
         text: 'รวม',
-        sort: true
     }];
 
     const assignedClass = [classes.Table, classes.marginTop].join(' ');
 
     return (
-        
+
         <div className={assignedClass}>
             <BootstrapTable
                 striped
@@ -31,7 +30,9 @@ const incentiveTable = (props) => {
                 keyField='cardType'
                 //data={products}
                 data={props.rows}
-                columns={columns} />
+                columns={columns}
+                rowEvents={props.events}
+            />
         </div>
 
     )

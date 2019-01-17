@@ -17,7 +17,6 @@ const claimTable = (props) => {
     }, {
         dataField: 'total',
         text: 'รวม',
-        sort: true
     }];
 
     return (
@@ -29,7 +28,9 @@ const claimTable = (props) => {
                 keyField='name'
                 //data={products}
                 data={props.rows}
-                columns={columns} />
+                columns={columns}
+                rowEvents={props.events}
+            />
         </div>
 
     )

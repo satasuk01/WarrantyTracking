@@ -6,7 +6,7 @@ import classes from './QueryTable.module.css';
 class QueryTable extends Component {
     state = {
         columns: [{
-            dataField: 'key', //concat showroomID with receiveDate
+            dataField: 'key', //concat showroomID with receiveDate(ไม่ก็ใช้ running key มาเปน ID)
             text: 'key',
             hidden: true
         }, {

@@ -5,8 +5,15 @@ import classes from './ClaimTable.module.css';
 
 const claimTable = (props) => {
     const columns = [{
+        dataField: 'key',
+        text: 'key',
+        hidden: true
+    }, {
         dataField: 'name',
         text: 'เรียกคืนจาก'
+    }, {
+        dataField: 'card',
+        text: 'รุ่น',
     },
     {
         dataField: 'amount',
@@ -25,7 +32,7 @@ const claimTable = (props) => {
             <BootstrapTable
                 striped
                 hover
-                keyField='name'
+                keyField='key'
                 //data={products}
                 data={props.rows}
                 columns={columns}

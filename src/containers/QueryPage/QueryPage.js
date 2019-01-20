@@ -32,7 +32,10 @@ class QueryPage extends Component {
         this.setState(oldState);
         console.log(date);
     }
-    handleQuery(){
+    handleQuery() {
+
+    }
+    rowEventHandler = () => {
 
     }
 
@@ -116,7 +119,7 @@ class QueryPage extends Component {
                                 />
                             </Col>
                         </Row>
-                        <Row><Col><div align="right" style={{padding: '0 5%'}}>
+                        <Row><Col><div align="right" style={{ padding: '0 5%' }}>
                             <Button>ค้นหา</Button>
                         </div></Col></Row>
                     </Form>

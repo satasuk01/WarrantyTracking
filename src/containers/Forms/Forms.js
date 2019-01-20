@@ -38,6 +38,7 @@ class Forms extends Component {
         tempClaimFrom: '',
         tempAmount: '',
         tempPrice: '',
+        tempClaimCard: '',
         claimTable: [],
         //===============
         //-----Incentive Table
@@ -91,13 +92,13 @@ class Forms extends Component {
         this.setState(oldState);
     }
 
-    handleClickInClaim(claimFrom, amountVal, priceVal) {
-        if (isNaN(amountVal) || isNaN(priceVal) || claimFrom.length === 0) {
+    handleClickInClaim(claimFrom, amountVal, priceVal, card) {
+        if (isNaN(amountVal) || isNaN(priceVal) || claimFrom.length === 0 || card === '') {
             alert("กรุณากรอกเฉพาะตัวเลข และเช็คข้อมูลให้ถูกต้อง")
         } else {
             const oldState = { ...this.state }
             const totalPrice = Number(amountVal) * Number(priceVal);
-            oldState['claimTable'].push({ name: claimFrom, amount: amountVal, price: priceVal, total: totalPrice });
+            oldState['claimTable'].push({ name: claimFrom, amount: amountVal, price: priceVal, total: totalPrice, card: card, key: claimFrom + card });
             this.setState(oldState);
         }
     }
@@ -142,12 +143,18 @@ class Forms extends Component {
         this.setState(oldState);
     }
 
+    confirmForm = () => {
+        //Send data to server and return to query page
+    }
 
     render() {
         return (
             <React.Fragment>
                 <Modal show={this.state.confirming} modalClosed={this.confirmCancelHandler}>
-                    Show
+                    <div>กรุณาเช็คข้อมูลให้เรียบร้อย ก่อนทำการยืนยัน</div>
+                    <div style={{ color: 'red', marginTop: '20px', textAlign: 'right' }}>*หลังจากยืนยันไปแล้วจะไม่สามารถแก้ไขได้อีก</div>
+                    <Button style={{ marginRight: '10px' }}>ยืนยัน</Button>
+                    <Button onClick={this.confirmCancelHandler}>กลับไปแก้ไข</Button>
                 </Modal>
                 <PageHeader className={classes.PageHeaderForm}>Warranty Tracking</PageHeader>
                 <div className={classes.Forms}>
@@ -270,13 +277,15 @@ class Forms extends Component {
                     <Row><ClaimRadio value={this.state.claimable} changed={(event) => this.handleChange(event, "claimable")} /></Row>
                     <Row><Col><ClaimTable rows={this.state.claimTable} events={this.deleteClaimHandler} /></Col></Row>
                     <ClaimTableInput
+                        cardType={this.state.tempClaimCard}
+                        changeType={(event) => this.handleChange(event, "tempClaimCard")}
                         claimFrom={this.state.tempClaimFrom}
                         claimAmount={this.state.tempAmout}
                         claimPrice={this.state.tempPrice}
                         changeFrom={(event) => this.handleChange(event, "tempClaimFrom")}
                         changeAmount={(event) => this.handleChange(event, "tempAmount")}
                         changePrice={(event) => this.handleChange(event, "tempPrice")}
-                        clicked={() => this.handleClickInClaim(this.state.tempClaimFrom, this.state.tempAmount, this.state.tempPrice)}
+                        clicked={() => this.handleClickInClaim(this.state.tempClaimFrom, this.state.tempAmount, this.state.tempPrice, this.state.tempClaimCard)}
                     />
                     <hr />
                     <Form>

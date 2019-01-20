@@ -15,12 +15,14 @@ const incentiveTableInput = (props) => {
                             <ControlLabel>บัตรลงทะเบียน</ControlLabel>
                             <FormControl componentClass="select" onChange={props.changeType} value={props.cardType}>
                                 <option value=""></option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
+                                <option value="XtraCole 7 รุ่น">XtraCole 7 รุ่น</option>
+                                <option value="XtraCole ธรรมดา">XtraCole ธรรมดา</option>
+                                <option value="Ceramic X">Ceramic X</option>
+                                <option value="Lamina">Lamina</option>
+                                <option value="Lamina Pop">Lamina Pop</option>
+                                <option value="Lamina Cerematrix">Lamina Cerematrix</option>
+                                <option value="Glacia">Glacia</option>
+                                <option value="Johnson">Johnson</option>
                             </FormControl>
                         </FormGroup>
                     </Col>

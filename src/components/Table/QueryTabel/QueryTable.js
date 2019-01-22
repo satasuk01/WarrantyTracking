@@ -2,6 +2,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import React, { Component } from 'react';
 
 import classes from './QueryTable.module.css';
+import '../Table.css';
 
 class QueryTable extends Component {
     state = {
@@ -47,7 +48,8 @@ class QueryTable extends Component {
                     hover
                     keyField='key'
                     data={this.props.rows}
-                    columns={this.state.columns} />
+                    columns={this.state.columns} 
+                    rowEvents={this.props.events} />
             </div>
         );
 

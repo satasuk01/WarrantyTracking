@@ -3,6 +3,7 @@ import React from 'react';
 import { Row, Col, Form, Button ,FormGroup, FormControl,ControlLabel} from 'react-bootstrap';
 import { inputField as InputField } from '../../InputForm/InputForm';
 import classes from './ClaimTable.module.css';
+import '../Table.css';
 
 const claimTableInput = (props) => {
     //TODO Convert string to int in the input field

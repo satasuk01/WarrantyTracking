@@ -2,6 +2,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import React from 'react';
 
 import classes from '../ClaimTable.module.css';
+import '../Table.css';
 
 const incentiveTable = (props) => {
     const columns = [{

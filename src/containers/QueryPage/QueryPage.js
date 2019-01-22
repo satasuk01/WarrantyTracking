@@ -17,7 +17,9 @@ class QueryPage extends Component {
         status: '0',
         saleID: '',
         saleName: '',
-        queryResult: []
+        queryResult: [
+            { key:123, showroomID:5555, showroomName:"Dummy Data", receiveDate:"Mon Jan 21 2019 12:54:45"}
+        ]
     }
 
     handleChange(e, state) {
@@ -35,10 +37,14 @@ class QueryPage extends Component {
     handleQuery() {
 
     }
-    rowEventHandler = () => {
-
+    selectCardHandler = {
+        onClick: (e, row, rowIndex) => {
+            //console.log(this.props);
+            console.log(row);
+            //console.log(`clicked on row with index: ${rowIndex}`);
+            this.props.history.push({ pathname: '/approval/' + row.key });
+        },
     }
-
     render() {
         return (
             <>
@@ -124,7 +130,7 @@ class QueryPage extends Component {
                         </div></Col></Row>
                     </Form>
                 </div>
-                <QueryTable rows={this.state.queryResult} />
+                <QueryTable className={classes.Table} rows={this.state.queryResult} events={this.selectCardHandler}/>
             </>
         );
 

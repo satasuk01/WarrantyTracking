@@ -5,12 +5,18 @@ import IncentiveTable from '../../components/Table/IncentiveTable/IncentiveTable
 import ClaimTable from '../../components/Table/ClaimTable';
 import classes from './CardApproval.module.css';
 import Modal from '../../components/UI/Modal/Modal';
+import { textBox as TextBox } from '../../components/InputForm/InputForm';
 
 class CardApproval extends Component {
     state = {
         approving: false,
         rejecting: false,
         rejectReason: '',
+        rejectOwner: '',
+        rejectID: '',
+        rejected: false,
+        //=======================
+        tempRejectReason: '',
         //========================
         showroomID: '',
         showroomName: '',
@@ -48,10 +54,11 @@ class CardApproval extends Component {
         taxAccSubmitDateTime: null,
         financeID: '',
         financeRecDateTime: null,
-        financeSubmitDateTime: null
-
+        financeSubmitDateTime: null,
+        //===========================
 
     }
+
     approveCancelHandler = () => {
         this.setState({ approving: false });
     }
@@ -67,12 +74,30 @@ class CardApproval extends Component {
     componentDidMount() {
         //Get data from server
     }
+    handleChange(e, state) {
+        const oldState = { ...this.state }
+        oldState[state] = e.target.value;
+        this.setState(oldState);
+    }
+
     render() {
         const space = <span className={classes.Space} />;
         let claimTable = <p />
         if (this.state.claimable === 'Yes') {
             claimTable = <Row><Col><ClaimTable rows={this.state.claimTable} /></Col></Row>;
         }
+
+        let reject = null;
+        if (this.state.rejected) {
+            reject = (
+                <>
+                    <p style={{ color: 'red' }}>บัตรนี้ถูกปฏิเสธ</p>
+                    <p>{this.state.rejectReason}</p>
+                    <p><strong>ผู้ปฏิเสธ</strong>: {this.state.rejectOwner}</p>
+                </>
+            );
+        }
+
         return (
             <>
                 <Modal show={this.state.approving} modalClosed={this.approveCancelHandler}>
@@ -83,15 +108,24 @@ class CardApproval extends Component {
                 </Modal>
                 <Modal show={this.state.rejecting} modalClosed={this.rejectCancelHandler}>
                     <div>กรุณาเช็คข้อมูลให้เรียบร้อย ก่อนทำการยืนยัน</div>
+                    <TextBox
+                            controlId="Note"
+                            label="เหตุผลการปฏิเสธ"
+                            value={this.state.rejectReason}
+                            placeholder=""
+                            changed={(event) => this.handleChange(event, "rejectReason")}
+                        />
                     <div style={{ color: 'red', marginTop: '20px', textAlign: 'right' }}>*หลังจากยืนยันไปแล้วจะไม่สามารถแก้ไขได้อีก</div>
                     <Button style={{ marginRight: '10px' }} bsStyle="danger">ปฏิเสธเอกสาร</Button>
                     <Button onClick={this.rejectCancelHandler}>กลับไปแก้ไข</Button>
                 </Modal>
                 <div className={classes.CardApproval}>
                     <h3 style={{ textAlign: 'center' }}>รายละเอียด</h3>
+                    {reject}
                 </div>
                 <div className={classes.CardApproval}>
-                    <p style={{ textAlign: 'right' }}><strong>ID</strong>: {this.props.match.params.id}</p>
+                    <p style={{ textAlign: 'right' }}><strong>ID</strong>: {this.props.match.params.id}{space} <strong>Status</strong>: {this.state.status}</p>
+                    <p style={{ textAlign: 'right' }}><strong>Version</strong>: {this.state.version}</p>
                     <p><strong>รหัสโชว์รูม</strong>: {this.state.showroomID} {space}<strong>ชื่อโชว์รูม</strong>: {this.state.showroomName}</p>
                     <p><strong>วันที่รับเอกสารจากโชว์รูม</strong>: {this.state.receiveDate} {space}<strong>ประเภทการเบิก</strong>: {this.state.tax}</p>
                     <hr />

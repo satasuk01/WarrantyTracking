@@ -2,10 +2,15 @@
     width: 95%;
     margin: 0px auto;
 }
-.Table thead{
+
+.Table thead {
     background-color: lightgray;
 }
 
-.marginTop{
+.marginTop {
     margin-top: 10px;
+}
+
+.Small {
+    width: 65px;
 }

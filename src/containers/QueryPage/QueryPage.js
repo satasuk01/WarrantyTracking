@@ -10,15 +10,10 @@ import classes from './QueryPage.module.css';
 class QueryPage extends Component {
     state = {
         isLoading: false, //implement modal
-        showroomID: '',
-        showroomName: '',
         receiveDateFrom: null, //ถ้าวันเป็น null ให้เป็น วันแรกของ 2561
         receiveDateTo: null, //ถ้าวันเป็น null ให้เป็น ปัจจุบัน
-        status: '0',
-        saleID: '',
-        saleName: '',
         queryResult: [
-            { key:123, showroomID:5555, showroomName:"Dummy Data", receiveDate:"Mon Jan 21 2019 12:54:45"}
+            { key: 123, showroomID: 5555, showroomName: "Dummy Data", receiveDate: Date() }
         ]
     }
 
@@ -42,6 +37,7 @@ class QueryPage extends Component {
             //console.log(this.props);
             console.log(row);
             //console.log(`clicked on row with index: ${rowIndex}`);
+            //console.log(this.props.history);
             this.props.history.push({ pathname: '/approval/' + row.key });
         },
     }
@@ -51,86 +47,31 @@ class QueryPage extends Component {
                 <PageHeader style={{ textAlign: 'center' }}>Warranty Query</PageHeader>
                 <div className={classes.Forms}>
                     <Form>
-                        <Row><Col xs={12}>CheckBox</Col></Row>
-                        <Row>
-                            <Col sm={6}>
-                                <Row>
-                                    <Col xs={12}>
-                                        <InputField
-                                            controlId="showroomID"
-                                            label="รหัสโชว์รูม"
-                                            value={this.state.showroomID}
-                                            placeholder=""
-                                            changed={(event) => this.handleChange(event, "showroomID")}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={12}>
-                                        <InputField
-                                            controlId="showroomName"
-                                            label="ชื่อโชว์รูม"
-                                            value={this.state.showroomName}
-                                            placeholder=""
-                                            changed={(event) => this.handleChange(event, "showroomName")}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={12}>
-                                        <StatusDropDown
-                                            value={this.state.status}
-                                            changed={(event) => this.handleChange(event, "status")}
-                                        />
-                                    </Col>
-                                </Row>
-                            </Col>
-                            <Col sm={6}>
-                                <Row style={{ height: '20px', marginLeft: '12px' }}><ControlLabel>วันที่รับเอกสารจากโชว์รูม</ControlLabel></Row>
-                                <Row>
-                                    <DatePicker className={classes.DatePicker}
-                                        selected={this.state.receiveDateFrom}
-                                        isClearable={true}
-                                        onChange={(date) => this.handleDateChange(date, "receiveDateFrom")}
-                                        placeholderText="ตั้งแต่วันที่"
-                                    />
+                        <div style={{ textAlign: 'center' }}><strong>กรุณาเลือกวันที่</strong></div>
+                        <hr />
 
-                                    <DatePicker className={classes.DatePicker}
-                                        selected={this.state.receiveDateTo}
-                                        isClearable={true}
-                                        onChange={(date) => this.handleDateChange(date, "receiveDateTo")}
-                                        placeholderText="จนถึงวันที่"
-                                    />
-                                </Row>
+                        <Row style={{ height: '20px', marginLeft: '12px' }}><ControlLabel>วันที่รับเอกสารจากโชว์รูม</ControlLabel></Row>
+                        <div>
+                            <DatePicker className={classes.DatePicker}
+                                selected={this.state.receiveDateFrom}
+                                isClearable={true}
+                                onChange={(date) => this.handleDateChange(date, "receiveDateFrom")}
+                                placeholderText="ตั้งแต่วันที่"
+                            />
 
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col sm={6}>
-                                <InputField
-                                    controlId="saleID"
-                                    label="Sale ID"
-                                    value={this.state.saleID}
-                                    placeholder=""
-                                    changed={(event) => this.handleChange(event, "saleID")}
-                                />
-                            </Col>
-                            <Col sm={6}>
-                                <InputField
-                                    controlId="saleName"
-                                    label="ชื่อ Sale"
-                                    value={this.state.saleName}
-                                    placeholder=""
-                                    changed={(event) => this.handleChange(event, "saleName")}
-                                />
-                            </Col>
-                        </Row>
-                        <Row><Col><div align="right" style={{ padding: '0 5%' }}>
+                            <DatePicker className={classes.DatePicker}
+                                selected={this.state.receiveDateTo}
+                                isClearable={true}
+                                onChange={(date) => this.handleDateChange(date, "receiveDateTo")}
+                                placeholderText="จนถึงวันที่"
+                            />
+                        </div>
+                        <div align="right" style={{ padding: '0 5%' }}>
                             <Button>ค้นหา</Button>
-                        </div></Col></Row>
+                        </div>
                     </Form>
                 </div>
-                <QueryTable className={classes.Table} rows={this.state.queryResult} events={this.selectCardHandler}/>
+                <QueryTable className={classes.Table} rows={this.state.queryResult} events={this.selectCardHandler} />
             </>
         );
 

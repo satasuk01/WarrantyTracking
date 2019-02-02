@@ -9,6 +9,7 @@ import { textBox as TextBox } from '../../components/InputForm/InputForm';
 
 class CardApproval extends Component {
     state = {
+        warrantyId: null,
         approving: false,
         rejecting: false,
         rejectReason: '',
@@ -59,6 +60,11 @@ class CardApproval extends Component {
 
     }
 
+    componentWillMount() {
+        this.setState({ warrantyId: this.props.match.params.id })
+        //console.log(this.props.history)
+    }
+
     approveCancelHandler = () => {
         this.setState({ approving: false });
     }
@@ -73,6 +79,7 @@ class CardApproval extends Component {
     }
     componentDidMount() {
         //Get data from server
+        //console.log(this.props.history);
     }
     handleChange(e, state) {
         const oldState = { ...this.state }
@@ -109,12 +116,12 @@ class CardApproval extends Component {
                 <Modal show={this.state.rejecting} modalClosed={this.rejectCancelHandler}>
                     <div>กรุณาเช็คข้อมูลให้เรียบร้อย ก่อนทำการยืนยัน</div>
                     <TextBox
-                            controlId="Note"
-                            label="เหตุผลการปฏิเสธ"
-                            value={this.state.rejectReason}
-                            placeholder=""
-                            changed={(event) => this.handleChange(event, "rejectReason")}
-                        />
+                        controlId="Note"
+                        label="เหตุผลการปฏิเสธ"
+                        value={this.state.rejectReason}
+                        placeholder=""
+                        changed={(event) => this.handleChange(event, "rejectReason")}
+                    />
                     <div style={{ color: 'red', marginTop: '20px', textAlign: 'right' }}>*หลังจากยืนยันไปแล้วจะไม่สามารถแก้ไขได้อีก</div>
                     <Button style={{ marginRight: '10px' }} bsStyle="danger">ปฏิเสธเอกสาร</Button>
                     <Button onClick={this.rejectCancelHandler}>กลับไปแก้ไข</Button>
@@ -124,7 +131,7 @@ class CardApproval extends Component {
                     {reject}
                 </div>
                 <div className={classes.CardApproval}>
-                    <p style={{ textAlign: 'right' }}><strong>ID</strong>: {this.props.match.params.id}{space} <strong>Status</strong>: {this.state.status}</p>
+                    <p style={{ textAlign: 'right' }}><strong>ID</strong>: {this.state.warrantyId}{space} <strong>Status</strong>: {this.state.status}</p>
                     <p style={{ textAlign: 'right' }}><strong>Version</strong>: {this.state.version}</p>
                     <p><strong>รหัสโชว์รูม</strong>: {this.state.showroomID} {space}<strong>ชื่อโชว์รูม</strong>: {this.state.showroomName}</p>
                     <p><strong>วันที่รับเอกสารจากโชว์รูม</strong>: {this.state.receiveDate} {space}<strong>ประเภทการเบิก</strong>: {this.state.tax}</p>
@@ -145,6 +152,7 @@ class CardApproval extends Component {
                     <hr />
                     <p><strong>หมายเหตุ</strong>: {this.state.note}</p>
                     <div align="right" style={{ padding: '0 5%' }}>
+                        <Button onClick={() => { this.props.history.push('/edit/'+this.state.warrantyId) }} bsStyle='primary' style={{ margin: '0 0' }}>แก้ไข</Button>
                         <Button onClick={this.approveHandler} bsStyle='success' style={{ margin: '0 5%' }}>ยืนยัน</Button>
                         <Button onClick={this.rejectHandler} bsStyle='danger'>ปฏิเสธ</Button>
                     </div>

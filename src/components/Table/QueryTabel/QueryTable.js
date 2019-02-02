@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import classes from './QueryTable.module.css';
 import '../Table.css';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter, dateFilter } from 'react-bootstrap-table2-filter';
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 
 
@@ -27,6 +27,7 @@ class QueryTable extends Component {
         }, {
             dataField: 'receiveDate',
             text: 'วันที่รับเอกสาร',
+            filter: dateFilter(),
             sort: true
         }, {
             dataField: 'amount',

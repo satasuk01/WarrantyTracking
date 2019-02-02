@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { inputField as InputField, datePicker as DatePicker, textBox as TextBox } from './../../components/InputForm/InputForm';
-import classes from './Forms.module.css';
+import classes from './EditPage.module.css';
 import { Form, PageHeader, Col, Row, Button } from 'react-bootstrap';
 import PayTypeRadio from './../../components/RadioButton/PayTypeRadio';
 import TNTRadio from './../../components/RadioButton/TNTRadio';
@@ -13,10 +13,11 @@ import IncentiveTable from '../../components/Table/IncentiveTable/IncentiveTable
 import IncentiveInput from '../../components/Table/IncentiveTable/IncentiveTableInput/IncentiveTableInput';
 import Modal from '../../components/UI/Modal/Modal';
 
-class Forms extends Component {
+class EditPage extends Component { //Can be editted only in status = Rejected
     state = {
+        //Almost everything will fetch from the server via id
+        warrantyId: null, //{this.props.match.params.id} use this id to fetch
         confirming: false,
-        //----------Implemented
         showroomID: '',
         showroomName: '',
         receiveDate: null,
@@ -30,25 +31,25 @@ class Forms extends Component {
         objective: '',
         claimable: 'No',
         note: '',
-        //-----------Not yet
         fromMonth: '',
         toMonth: '',
         year: '2019',
-        //-----Claim Table
         tempClaimFrom: '',
         tempAmount: '',
         tempPrice: '',
         tempClaimCard: '',
         claimTable: [],
-        //===============
-        //-----Incentive Table
         tempCardType: '',
         tempCardAmount: '',
         tempCardPrice: '',
         incentiveTable: [],
-        //============ ===
-        version: 1, //A new card will be initialized with version 1 
+        version: null, //+1 from original
     };
+
+    componentWillMount() {
+        this.setState({warrantyId: this.props.match.params.id});
+    }
+
     confirmCancelHandler = () => {
         this.setState({ confirming: false });
     }
@@ -156,8 +157,9 @@ class Forms extends Component {
                     <Button style={{ marginRight: '10px' }}>ยืนยัน</Button>
                     <Button onClick={this.confirmCancelHandler}>กลับไปแก้ไข</Button>
                 </Modal>
-                <PageHeader className={classes.PageHeaderForm}>New Incentive</PageHeader>
+                <PageHeader className={classes.PageHeaderForm}>Warranty Tracking(Edit)</PageHeader>
                 <div className={classes.Forms}>
+                    <div style={{ textAlign: 'right' }}><strong>Version:</strong> {this.state.version} <strong>WarrantyId:</strong>{this.state.warrantyId}</div>
                     <Form inline>
 
                         <InputField
@@ -299,7 +301,7 @@ class Forms extends Component {
                     </Form>
                     <hr />
                     <div align="right" style={{ padding: '0 5%' }}>
-                        <Button onClick={this.confirmHandler}>ส่ง</Button>
+                        <Button onClick={this.confirmHandler}>แก้ไข</Button>
                     </div>
                 </div>
             </React.Fragment >
@@ -307,4 +309,4 @@ class Forms extends Component {
     }
 }
 
-export default Forms; 
+export default EditPage; 

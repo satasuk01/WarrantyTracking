@@ -5,6 +5,7 @@ import { BrowserRouter, Route, NavLink, Switch, Redirect } from 'react-router-do
 import Query from './containers/QueryPage/QueryPage';
 import Forms from './containers/Forms/Forms';
 import CardApproval from './containers/CardApproval/CardApproval';
+import EditPage from './containers/EditPage/EditPage';
 
 class App extends Component {
   render() {
@@ -19,7 +20,7 @@ class App extends Component {
           </div>
           <Switch>
             <Route path={'/approval/:id'} component={CardApproval} />
-            <Route path='/approval' component={CardApproval} /> {/*ใช้ Debug เท่านั้น*/}
+            <Route path={'/edit/:id'} component={EditPage} />
             <Route path='/query' component={Query} />
             <Route path='/forms' component={Forms} />
             <Redirect from='/' to='/query' />
